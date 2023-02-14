@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public TextMeshProUGUI ammoText;
-    public TextMeshProUGUI vidasText;
+    //public TextMeshProUGUI ammoText;
+    //public TextMeshProUGUI vidasText;
     //Singleton
 
     public static GameManager instance {
@@ -22,15 +22,14 @@ public class GameManager : MonoBehaviour
     }
 
     void Update() {
-        //   ammoText.text=gunAmmo.ToString();
-        vidasText.text = vidas.ToString();
+        //ammoText.text = gunAmmo.ToString();
+        //vidasText.text = vidas.ToString();
     }
 
     public void LoseHealth(int heltToReduce) {
         vidas -= heltToReduce;
         if (vidas <= 0) {
-            SceneManager.LoadScene(
-                SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }
