@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
+
+    private Rigidbody rb;
     public CharacterController characterController;
     public float speed = 10f;
 
@@ -19,6 +21,13 @@ public class PlayerMovement : MonoBehaviour {
     public LayerMask groundMask;
     bool isGrounded;
 
+    // Respawn
+    public GameObject puntoRespawn;
+
+    private void Start() {
+        rb = GetComponent<Rigidbody>();
+    }
+
     void Update() {
         // Movimiento
         float x = Input.GetAxis("Horizontal");
@@ -29,6 +38,7 @@ public class PlayerMovement : MonoBehaviour {
         // Gravedad
         velocity.y += gravity * Time.deltaTime;
         characterController.Move(velocity * Time.deltaTime);
+
         //GroundCheck
         isGrounded = Physics.CheckSphere(groundCheck.position, sphereRadius, groundMask);
         if (isGrounded && velocity.y < 0) {
@@ -38,6 +48,22 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded) {
             velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity * Time.deltaTime);
         }
+    }
 
+    private void OnCollisionEnter(Collision collision) {
+        
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Respawn")) {
+            Respawn();
+        }
+    }
+
+    private void Respawn() {
+        Debug.Log("El punto: " + puntoRespawn.transform.position);
+        Debug.Log("Estoy" + transform.position);
+        //rb.transform.position = puntoRespawn.transform.position;
+        transform.position = new Vector3(0, 0, 0);
     }
 }

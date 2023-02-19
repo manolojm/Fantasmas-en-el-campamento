@@ -19,7 +19,7 @@ public class Shot : MonoBehaviour
     //public TextMeshProUGUI textAmmo;
 
     private void Start() {
-        shotForce = 1000f;
+        shotForce = 2000f;
     }
 
     private void Awake() {
