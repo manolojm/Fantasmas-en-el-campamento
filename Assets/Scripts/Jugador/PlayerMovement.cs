@@ -21,9 +21,6 @@ public class PlayerMovement : MonoBehaviour {
     public LayerMask groundMask;
     bool isGrounded;
 
-    // Respawn
-    public Transform puntoRespawn;
-
     private void Start() {
         rb = GetComponent<Rigidbody>();
     }
@@ -49,26 +46,5 @@ public class PlayerMovement : MonoBehaviour {
             velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity * Time.deltaTime);
         }
     }
-
-    private void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.CompareTag("Respawn")) {
-            Respawn();
-        }
-    }
-
-    private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.CompareTag("Respawn")) {
-            Respawn();
-        }
-    }
-
-    private void Respawn() {
-        GetComponent<CharacterController>().enabled = false;
-        gameObject.transform.position = puntoRespawn.position;
-        GetComponent<CharacterController>().enabled = true;
-
-        //rb.transform.position = puntoRespawn.transform.position;
-        //transform.position = new Vector3(puntoRespawn.transform.position.x, 
-            //puntoRespawn.transform.position.y, puntoRespawn.transform.position.z);
-    }
+    
 }

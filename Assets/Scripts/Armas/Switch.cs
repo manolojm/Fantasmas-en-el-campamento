@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponSwitch : MonoBehaviour {
+public class Switch : MonoBehaviour {
 
     public GameObject[] weapons;
     public int selectedWeapon = 0;
@@ -29,9 +29,11 @@ public class WeaponSwitch : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
             selectedWeapon = 0;
         }
+
         if (Input.GetKeyDown(KeyCode.Alpha2)) {
             selectedWeapon = 1;
         }
+
         if (Input.GetKeyDown(KeyCode.Alpha3)) {
             selectedWeapon = 2;
         }
@@ -55,13 +57,12 @@ public class WeaponSwitch : MonoBehaviour {
         }
     }
 
-    // Arma seleccionada
+    // Seleccionar arma
     void SelectWeapon() {
         int i = 0;
-        foreach (Transform weapon in transform) {
-            Debug.Log(weapon.ToString());
-            if (weapon.CompareTag("weapon")) {
-                Debug.Log("weapon");
+        foreach (GameObject weapon in weapons) {
+
+            if (weapon.CompareTag("Weapon")) {
                 if (i == selectedWeapon) {
                     weapon.gameObject.SetActive(true);
                 } else {

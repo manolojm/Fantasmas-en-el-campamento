@@ -12,8 +12,9 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemigo1") || collision.gameObject.CompareTag("Enemigo2") 
             || collision.gameObject.CompareTag("Enemigo3")) {
 
-            GameManager.EnemigoDerrotado();
+            GameManager.instance.EnemigoDerrotado();
             Destroy(collision.gameObject);
+            Destroy(gameObject);
         }
     }
 }

@@ -33,6 +33,6 @@ public class RespawnEnemigos : MonoBehaviour
         var enemigoGenerado = enemigos[Random.Range(0, enemigos.Length)];
         var nuevoEnem = Instantiate(enemigoGenerado, posicionEnemigo, Quaternion.identity);
         nuevoEnem.SetActive(true);
-        GameManager.NuevoEnemigo();
+        GameManager.instance.NuevoEnemigo();
     }
 }

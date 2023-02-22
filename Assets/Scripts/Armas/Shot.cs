@@ -16,10 +16,10 @@ public class Shot : MonoBehaviour
     //public AudioClip shotSound;
     //private AudioSource shotSource;
 
-    //public TextMeshProUGUI textAmmo;
+    public TextMeshProUGUI textAmmo;
 
     private void Start() {
-        shotForce = 2000f;
+        shotForce = 4000f;
     }
 
     private void Awake() {
@@ -29,15 +29,17 @@ public class Shot : MonoBehaviour
 
     void Update() {
         if (Input.GetButtonDown("Fire1")) {
+
             if (Time.time > shotRateTime && GameManager.instance.gunAmmo > 0) {
                 GameManager.instance.gunAmmo--;
-                //textAmmo.text = GameManager.instance.gunAmmo.ToString();
+                textAmmo.text = GameManager.instance.gunAmmo.ToString();
                 //shotSource.PlayOneShot(shotSound);
                 GameObject newBullet = Instantiate(bullet, spawnPoint.position, spawnPoint.rotation);
                 newBullet.GetComponent<Rigidbody>().AddForce(spawnPoint.forward * shotForce * Time.deltaTime, ForceMode.Impulse);
                 shotRateTime = Time.time + shotRate;
                 Destroy(newBullet, 3);
             }
+
         }
     }
 }
