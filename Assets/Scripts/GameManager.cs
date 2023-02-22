@@ -18,9 +18,10 @@ public class GameManager : MonoBehaviour
         get; private set;
     }
 
+    public int ronda = 1;
     public int gunAmmo = 20;
-    private int vidas = 10;
-    private int enemigosRestantes = 10;
+    public int vidas = 10;
+    public int enemigosRestantes = 10;
     private int numEnemigos = 0;
 
     private GameObject[] enemigos1, enemigos2, enemigos3;
@@ -46,22 +47,40 @@ public class GameManager : MonoBehaviour
         vidasText.text = vidas.ToString();
 
         if (enemigosRestantes < 1) {
-            victoriaText.SetActive(true);
-
-            enemigos1 = GameObject.FindGameObjectsWithTag("Enemigo1");
-            foreach (GameObject enemigo in enemigos1) {
-                Destroy(enemigo);
+            AcabarRonda();
+            if (ronda == 1) {
+                Invoke("GanarRonda1", 5f);
+            } else {
+                Invoke("GanarRonda2", 5f);
             }
+        }
+    }
 
-            enemigos2 = GameObject.FindGameObjectsWithTag("Enemigo2");
-            foreach (GameObject enemigo in enemigos2) {
-                Destroy(enemigo);
-            }
+    public void GanarRonda1() {
+        SceneManager.LoadScene("DemoNight");
+    }
 
-            enemigos3 = GameObject.FindGameObjectsWithTag("Enemigo3");
-            foreach (GameObject enemigo in enemigos3) {
-                Destroy(enemigo);
-            }
+    public void GanarRonda2() {
+        Cursor.lockState = CursorLockMode.None;
+        SceneManager.LoadScene("CreditosScene");
+    }
+
+    public void AcabarRonda() {
+        victoriaText.SetActive(true);
+
+        enemigos1 = GameObject.FindGameObjectsWithTag("Enemigo1");
+        foreach (GameObject enemigo in enemigos1) {
+            Destroy(enemigo);
+        }
+
+        enemigos2 = GameObject.FindGameObjectsWithTag("Enemigo2");
+        foreach (GameObject enemigo in enemigos2) {
+            Destroy(enemigo);
+        }
+
+        enemigos3 = GameObject.FindGameObjectsWithTag("Enemigo3");
+        foreach (GameObject enemigo in enemigos3) {
+            Destroy(enemigo);
         }
     }
 

@@ -13,9 +13,10 @@ public class Shot : MonoBehaviour
     private float shotRateTime = 0;  //tiempo desde que se disparó
 
     // Sonido
-    //public AudioClip shotSound;
-    //private AudioSource shotSource;
+    public AudioClip shotSound;
+    private AudioSource shotSource;
 
+    public GameObject efectoExplosion;
     public TextMeshProUGUI textAmmo;
 
     private void Start() {
@@ -23,7 +24,7 @@ public class Shot : MonoBehaviour
     }
 
     private void Awake() {
-        //shotSource = GetComponent<AudioSource>();
+        shotSource = GetComponent<AudioSource>();
 
     }
 
@@ -33,10 +34,15 @@ public class Shot : MonoBehaviour
             if (Time.time > shotRateTime && GameManager.instance.gunAmmo > 0) {
                 GameManager.instance.gunAmmo--;
                 textAmmo.text = GameManager.instance.gunAmmo.ToString();
-                //shotSource.PlayOneShot(shotSound);
+                shotSource.PlayOneShot(shotSound);
+
+                GameObject newExplosion = Instantiate(efectoExplosion, spawnPoint.position, spawnPoint.rotation);
                 GameObject newBullet = Instantiate(bullet, spawnPoint.position, spawnPoint.rotation);
+
                 newBullet.GetComponent<Rigidbody>().AddForce(spawnPoint.forward * shotForce * Time.deltaTime, ForceMode.Impulse);
                 shotRateTime = Time.time + shotRate;
+
+                Destroy(newExplosion, 3);
                 Destroy(newBullet, 3);
             }
 
