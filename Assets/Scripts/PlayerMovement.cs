@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour {
     bool isGrounded;
 
     // Respawn
-    public GameObject puntoRespawn;
+    public Transform puntoRespawn;
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
@@ -51,7 +51,9 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void OnCollisionEnter(Collision collision) {
-        
+        if (collision.gameObject.CompareTag("Respawn")) {
+            Respawn();
+        }
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -61,9 +63,12 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void Respawn() {
-        Debug.Log("El punto: " + puntoRespawn.transform.position);
-        Debug.Log("Estoy" + transform.position);
+        GetComponent<CharacterController>().enabled = false;
+        gameObject.transform.position = puntoRespawn.position;
+        GetComponent<CharacterController>().enabled = true;
+
         //rb.transform.position = puntoRespawn.transform.position;
-        transform.position = new Vector3(0, 0, 0);
+        //transform.position = new Vector3(puntoRespawn.transform.position.x, 
+            //puntoRespawn.transform.position.y, puntoRespawn.transform.position.z);
     }
 }

@@ -14,8 +14,12 @@ public class GameManager : MonoBehaviour
         get; private set;
     }
 
-    public int gunAmmo = 10;
+    public int gunAmmo = 50;
     public int vidas = 10;
+    public static int enemigosRestantes = 5;
+    public static int numEnemigos = 0;
+
+    private GameObject[] enemigos1, enemigos2, enemigos3;
 
     private void Awake() {
         instance = this;
@@ -24,6 +28,26 @@ public class GameManager : MonoBehaviour
     void Update() {
         //ammoText.text = gunAmmo.ToString();
         //vidasText.text = vidas.ToString();
+
+        if (enemigosRestantes < 1) {
+            Debug.Log("Partida acabada!");
+
+            enemigos1 = GameObject.FindGameObjectsWithTag("Enemigo1");
+            foreach (GameObject enemigo in enemigos1) {
+                Destroy(enemigo);
+            }
+
+            enemigos2 = GameObject.FindGameObjectsWithTag("Enemigo2");
+            foreach (GameObject enemigo in enemigos2) {
+                Destroy(enemigo);
+            }
+
+            enemigos3 = GameObject.FindGameObjectsWithTag("Enemigo3");
+            foreach (GameObject enemigo in enemigos3) {
+                Destroy(enemigo);
+            }
+
+        }
     }
 
     public void LoseHealth(int heltToReduce) {
@@ -31,5 +55,14 @@ public class GameManager : MonoBehaviour
         if (vidas <= 0) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+    }
+
+    public static void EnemigoDerrotado() {
+        Debug.Log("enemigo menos");
+        enemigosRestantes--;
+    }
+
+    public static void NuevoEnemigo() {
+        numEnemigos++;
     }
 }

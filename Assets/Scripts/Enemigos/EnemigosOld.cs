@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemigos : MonoBehaviour
+public class EnemigosOld : MonoBehaviour
 {
     [SerializeField] private Transform _player2Follow;
     [SerializeField] private float _stopDistante, _speed;
@@ -15,6 +15,7 @@ public class Enemigos : MonoBehaviour
         if (_variableSpeed) {
             _speed = Random.Range(_speed / 3f, _speed * 1.8f);
         }
+
         if (_player2Follow == null) {
             _player2Follow = GameObject.FindGameObjectWithTag("Player").transform;
         }
@@ -27,6 +28,7 @@ public class Enemigos : MonoBehaviour
         if (_player2Follow != null) {
             if (Vector3.Distance(transform.position, _player2Follow.position) > _stopDistante) {
                 transform.position = Vector3.MoveTowards(transform.position, _player2Follow.position, _speed * Time.deltaTime);
+                Debug.Log("seguir");
             }
         }
     }
